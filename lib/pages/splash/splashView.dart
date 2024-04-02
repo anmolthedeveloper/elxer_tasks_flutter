@@ -50,6 +50,7 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimateGradient(
+        duration: const Duration(seconds: 3),
         primaryBegin: Alignment.topLeft,
         primaryEnd: Alignment.bottomLeft,
         secondaryBegin: Alignment.bottomLeft,

@@ -1,3 +1,4 @@
+import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:elxer_tasks/pages/signin/signinPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/state/app/user_bloc.dart';
 import '../../core/theme/colors.dart';
+import '../../core/widgets/customBottomNavigationBar/customBottomNavigationBar.dart';
+import '../home/homePage.dart';
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -14,19 +17,41 @@ class DashboardView extends StatefulWidget {
 }
 
 class _DashboardViewState extends State<DashboardView> {
+  List<TabItem> items = const [
+    TabItem(
+      icon: Icons.home,
+      // title: 'Home',
+    ),
+    TabItem(
+      icon: Icons.bar_chart,
+    ),
+    TabItem(
+      icon: Icons.add,
+    ),
+    TabItem(
+      icon: Icons.shopping_cart_outlined,
+    ),
+    TabItem(
+      icon: Icons.account_circle,
+    ),
+  ];
+
+  int onPage = 0;
+
   @override
   void initState() {
     super.initState();
 
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.light,
-      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
     ));
   }
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
         if (state is NotSignedInUserState) {
@@ -42,19 +67,23 @@ class _DashboardViewState extends State<DashboardView> {
       builder: (context, state) {
         if (state is SignedInUserState) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: primaryGreenThemeColor,
-              title: const Text('Elxer Tasks'),
+            backgroundColor: secondaryOffWhiteColor,
+            body: IndexedStack(
+              index: onPage,
+              children: const [
+                HomePage(),
+              ],
             ),
-            body: const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Hello',
-                  ),
-                ],
-              ),
+            bottomNavigationBar: CustomBottomNavigationBar(
+              onChange: (index) {
+                debugPrint('INDEX: $index');
+                setState(() {
+                  onPage = index;
+                });
+              },
+              onPlusTap: () {
+                debugPrint('PLUS CLICKEDDD');
+              },
             ),
           );
         } else {

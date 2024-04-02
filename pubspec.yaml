@@ -45,6 +45,7 @@ dependencies:
   animate_gradient: ^0.0.2+1
   flutter_svg: ^2.0.10+1
   gap: ^3.0.1
+  awesome_bottom_bar: ^1.2.4
 
 dev_dependencies:
   flutter_test:

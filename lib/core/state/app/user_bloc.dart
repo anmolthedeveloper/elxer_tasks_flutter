@@ -20,7 +20,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       debugPrint(user.toString());
     });
     on<SignedInUserEvent>((event, emit) {
-      // TODO: implement event handler
+      emit(SignedInUserState(user: event.user));
     });
     on<NotSignedInUserEvent>((event, emit) {
       emit(NotSignedInUserState());
