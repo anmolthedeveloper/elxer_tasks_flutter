@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "838348876581",
+    "project_id": "elxer-tasks",
+    "storage_bucket": "elxer-tasks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838348876581:android:a24c8ba2ff18cb43ba88cc",
+        "android_client_info": {
+          "package_name": "com.anmolthedeveloper.elxer.elxer_tasks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVzCuy0J2grbrBp05NUyAgKvKHQ-UzUCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
