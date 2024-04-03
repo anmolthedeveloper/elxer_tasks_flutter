@@ -1,4 +1,5 @@
 import 'package:elxer_tasks/core/state/task/deleteTaskCubit/delete_task_cubit.dart';
+import 'package:elxer_tasks/core/state/task/fetchTasksCubit/fetch_tasks_cubit.dart';
 import 'package:elxer_tasks/core/state/task/models/task.dart';
 import 'package:elxer_tasks/core/theme/colors.dart';
 import 'package:elxer_tasks/core/utils/capitalizeFirstLetter.dart';
@@ -54,9 +55,16 @@ class _TaskWidgetState extends State<TaskWidget> {
               context: context,
               barrierDismissible: true,
               builder: (BuildContext innerContext) {
-                return BlocProvider.value(
-                  value:
-                      BlocProvider.of<DeleteOrUpdateTaskStatusCubit>(context),
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider.value(
+                      value: BlocProvider.of<DeleteOrUpdateTaskStatusCubit>(
+                          context),
+                    ),
+                    BlocProvider.value(
+                      value: BlocProvider.of<FetchTasksCubit>(context),
+                    ),
+                  ],
                   child: TaskDetailDialog(
                     task: widget.task,
                     priority: priority,

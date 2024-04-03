@@ -58,4 +58,18 @@ class TaskRepository {
       rethrow;
     }
   }
+
+  Future<void> updateTaskForEmail(String email, TaskModel task) async {
+    try {
+      print(task.toJson());
+      await usersCollection
+          .doc(email)
+          .collection('tasks')
+          .doc(task.id!)
+          .update(task.toJson());
+    } catch (e) {
+      debugPrint("Error updating task: $e");
+      rethrow;
+    }
+  }
 }

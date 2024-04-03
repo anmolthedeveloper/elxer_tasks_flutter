@@ -6,9 +6,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 import '../../../core/common/ui/dialogs/deleteDialog.dart';
+import '../../../core/state/task/fetchTasksCubit/fetch_tasks_cubit.dart';
 import '../../../core/state/task/models/task.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/utils/capitalizeFirstLetter.dart';
+import '../../editTask/editTaskPage.dart';
 
 class TaskDetailDialog extends StatelessWidget {
   const TaskDetailDialog(
@@ -74,9 +76,18 @@ class TaskDetailDialog extends StatelessWidget {
                               context: context,
                               barrierDismissible: true,
                               builder: (BuildContext innerContext) {
-                                return BlocProvider.value(
-                                  value: BlocProvider.of<
-                                      DeleteOrUpdateTaskStatusCubit>(context),
+                                return MultiBlocProvider(
+                                  providers: [
+                                    BlocProvider.value(
+                                      value: BlocProvider.of<
+                                              DeleteOrUpdateTaskStatusCubit>(
+                                          context),
+                                    ),
+                                    BlocProvider.value(
+                                      value: BlocProvider.of<FetchTasksCubit>(
+                                          context),
+                                    ),
+                                  ],
                                   child: DeleteDialog(
                                     onCancel: () {
                                       Navigator.pop(innerContext);
@@ -105,6 +116,20 @@ class TaskDetailDialog extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => EditTaskPage(
+                                email: email,
+                                task: task,
+                              ),
+                            ),
+                          ).then((value) {
+                            context.read<FetchTasksCubit>().fetchTasks();
+                            Navigator.pop(context);
+                          });
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SvgPicture.asset(
