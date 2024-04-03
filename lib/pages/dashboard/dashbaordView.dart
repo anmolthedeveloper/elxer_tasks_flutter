@@ -86,7 +86,9 @@ class _DashboardViewState extends State<DashboardView> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => const CreateTaskPage(),
+                    builder: (BuildContext context) => CreateTaskPage(
+                      email: state.user.email!,
+                    ),
                   ),
                 );
               },

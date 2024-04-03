@@ -5,6 +5,8 @@ abstract class CreateTaskState {}
 
 class CreateTaskInitialState extends CreateTaskState {}
 
+class CreateTaskLoadingState extends CreateTaskState {}
+
 class CreateTaskSuccessState extends CreateTaskState {}
 
 class CreateTaskFailedState extends CreateTaskState {}
