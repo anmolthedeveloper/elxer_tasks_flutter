@@ -47,6 +47,9 @@ class _CreateTaskViewState extends State<CreateTaskView> {
               context: context,
               message: 'Successfully created task',
               duration: const Duration(seconds: 3));
+
+          _taskController.text = '';
+          _descriptionController.text = '';
         } else if (state is CreateTaskFailedState) {
           OverlayManager.showError(
               context: context,

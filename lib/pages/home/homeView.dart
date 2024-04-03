@@ -1,3 +1,5 @@
+import 'package:elxer_tasks/core/state/task/fetchTasksCubit/fetch_tasks_cubit.dart';
+import 'package:elxer_tasks/pages/home/widget/taskWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -33,18 +35,49 @@ class _HomeViewState extends State<HomeView> {
         if (state is SignedInUserState) {
           return Scaffold(
             backgroundColor: secondaryOffWhiteColor,
+            appBar: AppBar(
+              surfaceTintColor: secondaryOffWhiteColor,
+              backgroundColor: secondaryOffWhiteColor,
+              title: Text(
+                'Welcome ${state.user.displayName?.split(' ')[0] ?? 'User'}',
+                style: theme.textTheme.titleLarge!
+                    .copyWith(fontWeight: FontWeight.w400),
+              ),
+            ),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  children: <Widget>[
-                    const Gap(20.0),
-                    Text(
-                      'Welcome ${state.user.displayName?.split(' ')[0] ?? 'User'}',
-                      style: theme.textTheme.titleLarge!
-                          .copyWith(fontWeight: FontWeight.w400),
-                    ),
-                  ],
+                child: BlocBuilder<FetchTasksCubit, FetchTasksState>(
+                  builder: (context, fetchTasksState) {
+                    if (fetchTasksState is FetchTasksLoadingState) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: primaryGreenThemeColor,
+                        ),
+                      );
+                    }
+
+                    if (fetchTasksState is FetchTasksSuccessState) {
+                      if (fetchTasksState.tasks.isEmpty) {
+                        return const Center(
+                          child: Text('Start by create a Task.'),
+                        );
+                      }
+                      return ListView.builder(
+                          itemCount: fetchTasksState.tasks.length,
+                          itemBuilder: (context, index) {
+                            return TaskWidget(
+                                task: fetchTasksState.tasks[index]!);
+                          });
+                    }
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Gap(20.0),
+                        if (fetchTasksState is FetchTasksFailedState) ...[],
+                      ],
+                    );
+                  },
                 ),
               ),
             ),

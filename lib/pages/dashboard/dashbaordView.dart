@@ -1,4 +1,5 @@
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:elxer_tasks/core/state/task/fetchTasksCubit/fetch_tasks_cubit.dart';
 import 'package:elxer_tasks/pages/createTask/createTaskPage.dart';
 import 'package:elxer_tasks/pages/signin/signinPage.dart';
 import 'package:flutter/material.dart';
@@ -73,16 +74,19 @@ class _DashboardViewState extends State<DashboardView> {
               index: onPage,
               children: const [
                 HomePage(),
+                Center(
+                  child: Text('Stats'),
+                ),
+                Center(
+                  child: Text('Calender'),
+                ),
+                Center(
+                  child: Text('Settings'),
+                ),
               ],
             ),
-            bottomNavigationBar: CustomBottomNavigationBar(
-              onChange: (index) {
-                debugPrint('INDEX: $index');
-                setState(() {
-                  onPage = index;
-                });
-              },
-              onPlusTap: () {
+            floatingActionButton: GestureDetector(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -90,8 +94,42 @@ class _DashboardViewState extends State<DashboardView> {
                       email: state.user.email!,
                     ),
                   ),
-                );
+                ).then((value) => context.read<FetchTasksCubit>().fetchTasks());
               },
+              child: Container(
+                height: 65,
+                width: 65,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(0, 2), // changes position of shadow
+                    ),
+                  ],
+                  color: primaryGreenThemeColor,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(100.0),
+                  ),
+                ),
+                child: const Icon(
+                  Icons.add,
+                  color: primaryWhiteColor,
+                  size: 30,
+                ),
+              ),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: CustomBottomNavigationBar(
+              onChange: (index) {
+                debugPrint('INDEX: $index');
+                setState(() {
+                  onPage = index;
+                });
+              },
+              onPlusTap: () {},
             ),
           );
         } else {

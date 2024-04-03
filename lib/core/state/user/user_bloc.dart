@@ -7,9 +7,11 @@ part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
+  User? user;
   UserBloc() : super(UserInitialState()) {
     var userRepo = UserRepository();
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+      this.user = user;
       if (user == null) {
         add(NotSignedInUserEvent());
         return;

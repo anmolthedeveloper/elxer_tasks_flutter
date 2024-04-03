@@ -1,5 +1,6 @@
-import 'package:elxer_tasks/pages/home/homeView.dart';
 import 'package:flutter/material.dart';
+
+import 'homeView.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

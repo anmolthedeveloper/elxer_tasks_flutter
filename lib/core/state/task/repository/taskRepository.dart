@@ -12,7 +12,27 @@ class TaskRepository {
       await usersCollection.doc(email).collection('tasks').add(task.toJson());
     } catch (e) {
       debugPrint("Error adding task: $e");
-      throw e;
+      rethrow;
+    }
+  }
+
+  Future<List<TaskModel?>> fetchTasksForEmail(String email) async {
+    try {
+      QuerySnapshot querySnapshot = await usersCollection
+          .doc(email)
+          .collection('tasks')
+          // .orderBy('timestamp', descending: true)
+          .get();
+
+      List<TaskModel?> tasks = querySnapshot.docs.map((doc) {
+        return TaskModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
+      }).toList();
+      tasks.sort((a, b) => DateTime.parse(a!.createdAt!)
+          .compareTo(DateTime.parse(b!.createdAt!)));
+      return tasks;
+    } catch (e) {
+      debugPrint("Error fetching tasks: $e");
+      rethrow;
     }
   }
 }

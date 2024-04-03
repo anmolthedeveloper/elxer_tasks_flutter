@@ -22,9 +22,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       alignment: Alignment.center,
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 50),
           color: primaryWhiteColor,
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 18.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -84,34 +83,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
                     highlightColor: primaryGreenThemeColor),
               ),
             ],
-          ),
-        ),
-        Positioned(
-          bottom: 25,
-          child: GestureDetector(
-            onTap: widget.onPlusTap,
-            child: Container(
-              height: 65,
-              width: 65,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2), // changes position of shadow
-                  ),
-                ],
-                color: primaryGreenThemeColor,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(100.0),
-                ),
-              ),
-              child: const Icon(
-                Icons.add,
-                color: primaryWhiteColor,
-              ),
-            ),
           ),
         ),
       ],
