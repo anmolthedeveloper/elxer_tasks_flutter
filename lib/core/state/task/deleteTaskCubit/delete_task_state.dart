@@ -10,3 +10,7 @@ class DeleteTaskLoadingState extends DeleteTaskState {}
 class DeleteTaskSuccessState extends DeleteTaskState {}
 
 class DeleteTaskFailedState extends DeleteTaskState {}
+
+class UpdateTaskStatusSuccessState extends DeleteTaskState {}
+
+class UpdateTaskStatusFailedState extends DeleteTaskState {}

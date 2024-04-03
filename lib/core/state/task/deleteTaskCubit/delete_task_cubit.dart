@@ -5,9 +5,9 @@ import '../repository/taskRepository.dart';
 
 part 'delete_task_state.dart';
 
-class DeleteTaskCubit extends Cubit<DeleteTaskState> {
+class DeleteOrUpdateTaskStatusCubit extends Cubit<DeleteTaskState> {
   late final TaskRepository taskRepo;
-  DeleteTaskCubit() : super(DeleteTaskInitialState()) {
+  DeleteOrUpdateTaskStatusCubit() : super(DeleteTaskInitialState()) {
     taskRepo = TaskRepository();
   }
 
@@ -19,6 +19,20 @@ class DeleteTaskCubit extends Cubit<DeleteTaskState> {
     } catch (e) {
       debugPrint('Error while creating task: $e');
       emit(DeleteTaskFailedState());
+    }
+  }
+
+  void updateTaskStatus(
+      {required String taskId,
+      required String email,
+      required bool status}) async {
+    try {
+      emit(DeleteTaskLoadingState());
+      await taskRepo.updateTaskIsComplete(taskId, email, status);
+      emit(UpdateTaskStatusSuccessState());
+    } catch (e) {
+      debugPrint('Error while updating task status: $e');
+      emit(UpdateTaskStatusFailedState());
     }
   }
 }

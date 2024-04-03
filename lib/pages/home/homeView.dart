@@ -21,7 +21,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return BlocListener<DeleteTaskCubit, DeleteTaskState>(
+    return BlocListener<DeleteOrUpdateTaskStatusCubit, DeleteTaskState>(
       listener: (context, state) {
         if (state is DeleteTaskSuccessState) {
           OverlayManager.showSuccess(
@@ -33,6 +33,18 @@ class _HomeViewState extends State<HomeView> {
           OverlayManager.showError(
               context: context,
               message: 'Failed to delete task',
+              duration: const Duration(seconds: 3));
+        } else if (state is UpdateTaskStatusSuccessState) {
+          OverlayManager.showSuccess(
+              context: context,
+              message: 'Successfully updated task',
+              duration: const Duration(seconds: 3));
+          context.read<FetchTasksCubit>().fetchTasks();
+          Navigator.pop(context);
+        } else if (state is UpdateTaskStatusFailedState) {
+          OverlayManager.showError(
+              context: context,
+              message: 'Failed to update task',
               duration: const Duration(seconds: 3));
         }
       },

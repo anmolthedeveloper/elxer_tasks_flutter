@@ -1,3 +1,4 @@
+import 'package:blinking_text/blinking_text.dart';
 import 'package:elxer_tasks/core/state/task/deleteTaskCubit/delete_task_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,10 +49,20 @@ class TaskDetailDialog extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        '${capitalizeFirstLetter(task.priority!)} Priority',
-                        style: theme.textTheme.titleSmall!.copyWith(
-                            color: priorityColor, fontWeight: FontWeight.w200),
+                      Column(
+                        children: [
+                          Text(
+                            '${capitalizeFirstLetter(task.priority!)} Priority',
+                            style: theme.textTheme.titleSmall!.copyWith(
+                                color: priorityColor,
+                                fontWeight: FontWeight.w200),
+                          ),
+                          if (task.isComplete!)
+                            const BlinkText(
+                              'Task completed',
+                              beginColor: primaryGreenThemeColor,
+                            ),
+                        ],
                       ),
                     ],
                   ),
@@ -64,15 +75,15 @@ class TaskDetailDialog extends StatelessWidget {
                               barrierDismissible: true,
                               builder: (BuildContext innerContext) {
                                 return BlocProvider.value(
-                                  value:
-                                      BlocProvider.of<DeleteTaskCubit>(context),
+                                  value: BlocProvider.of<
+                                      DeleteOrUpdateTaskStatusCubit>(context),
                                   child: DeleteDialog(
                                     onCancel: () {
                                       Navigator.pop(innerContext);
                                     },
                                     onDelete: () {
                                       context
-                                          .read<DeleteTaskCubit>()
+                                          .read<DeleteOrUpdateTaskStatusCubit>()
                                           .deleteTask(
                                               taskId: task.id!, email: email);
                                       Navigator.pop(context);
@@ -147,6 +158,43 @@ class TaskDetailDialog extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              const Gap(16.0),
+              GestureDetector(
+                onTap: () {
+                  context
+                      .read<DeleteOrUpdateTaskStatusCubit>()
+                      .updateTaskStatus(
+                          taskId: task.id!,
+                          email: email,
+                          status: !task.isComplete!);
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: !task.isComplete!
+                              ? primaryGreenThemeColor
+                              : primaryRedColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(50.0),
+                          ),
+                        ),
+                        height: 50,
+                        child: Center(
+                          child: Text(
+                            task.isComplete!
+                                ? 'Mark as incomplete'
+                                : 'Mark as completed',
+                            style: theme.textTheme.titleMedium!
+                                .copyWith(color: primaryWhiteColor),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

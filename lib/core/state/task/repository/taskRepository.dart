@@ -44,4 +44,18 @@ class TaskRepository {
       rethrow;
     }
   }
+
+  Future<void> updateTaskIsComplete(
+      String taskId, String email, bool isComplete) async {
+    try {
+      await usersCollection
+          .doc(email)
+          .collection('tasks')
+          .doc(taskId)
+          .update({'isComplete': isComplete});
+    } catch (e) {
+      debugPrint("Error updating task isComplete: $e");
+      rethrow;
+    }
+  }
 }
