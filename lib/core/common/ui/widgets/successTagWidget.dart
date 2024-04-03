@@ -17,9 +17,9 @@ class SuccessTagWidget extends StatelessWidget {
         Container(
           width: width * .9,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          decoration: BoxDecoration(
-            color: primaryGreenColor.withOpacity(.1),
-            borderRadius: const BorderRadius.all(
+          decoration: const BoxDecoration(
+            color: primaryGreenColor,
+            borderRadius: BorderRadius.all(
               Radius.circular(10.0),
             ),
           ),
@@ -28,7 +28,7 @@ class SuccessTagWidget extends StatelessWidget {
             child: Text(
               success,
               style: theme.textTheme.labelSmall!.copyWith(
-                  fontWeight: FontWeight.w500, color: primaryGreenColor),
+                  fontWeight: FontWeight.w500, color: primaryWhiteColor),
               textAlign: TextAlign.center,
             ),
           ),

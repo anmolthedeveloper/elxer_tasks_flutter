@@ -1,14 +1,17 @@
+import 'package:elxer_tasks/core/state/task/deleteTaskCubit/delete_task_cubit.dart';
 import 'package:elxer_tasks/core/state/task/models/task.dart';
 import 'package:elxer_tasks/core/theme/colors.dart';
 import 'package:elxer_tasks/core/utils/capitalizeFirstLetter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 import 'TaskDetailDialog.dart';
 
 class TaskWidget extends StatefulWidget {
-  const TaskWidget({super.key, required this.task});
+  const TaskWidget({super.key, required this.task, required this.email});
   final TaskModel task;
+  final String email;
 
   @override
   State<TaskWidget> createState() => _TaskWidgetState();
@@ -47,10 +50,14 @@ class _TaskWidgetState extends State<TaskWidget> {
           showDialog(
               context: context,
               barrierDismissible: true,
-              builder: (BuildContext context) {
-                return TaskDetailDialog(
-                  task: widget.task,
-                  priority: priority,
+              builder: (BuildContext innerContext) {
+                return BlocProvider.value(
+                  value: BlocProvider.of<DeleteTaskCubit>(context),
+                  child: TaskDetailDialog(
+                    task: widget.task,
+                    priority: priority,
+                    email: widget.email,
+                  ),
                 );
               });
         },

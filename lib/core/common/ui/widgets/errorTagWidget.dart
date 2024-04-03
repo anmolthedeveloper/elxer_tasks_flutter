@@ -17,9 +17,9 @@ class ErrorTagWidget extends StatelessWidget {
         Container(
           width: width * .9,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          decoration: BoxDecoration(
-            color: primaryRedColor.withOpacity(.1),
-            borderRadius: const BorderRadius.all(
+          decoration: const BoxDecoration(
+            color: primaryRedColor,
+            borderRadius: BorderRadius.all(
               Radius.circular(10.0),
             ),
           ),
@@ -28,7 +28,7 @@ class ErrorTagWidget extends StatelessWidget {
             child: Text(
               error,
               style: theme.textTheme.labelSmall!.copyWith(
-                  fontWeight: FontWeight.w500, color: primaryRedColor),
+                  fontWeight: FontWeight.w500, color: primaryWhiteColor),
             ),
           ),
         ),

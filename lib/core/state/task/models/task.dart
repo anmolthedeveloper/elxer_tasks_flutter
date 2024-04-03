@@ -6,16 +6,16 @@ class TaskModel {
   bool? isComplete;
   String? createdAt;
 
-  TaskModel(
-      {this.id,
-      this.task,
-      this.description,
-      this.priority,
-      this.isComplete,
-      this.createdAt});
+  TaskModel({
+    this.id,
+    this.task,
+    this.description,
+    this.priority,
+    this.isComplete,
+    this.createdAt,
+  });
 
-  TaskModel.fromJson(Map<String, dynamic> json, String id) {
-    id = id;
+  TaskModel.fromJson(Map<String, dynamic> json, String this.id) {
     task = json['task'];
     description = json['description'];
     priority = json['priority'];

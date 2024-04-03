@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/state/task/deleteTaskCubit/delete_task_cubit.dart';
 import 'homeView.dart';
 
 class HomePage extends StatelessWidget {
@@ -7,6 +9,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const HomeView();
+    return BlocProvider(
+      create: (context) => DeleteTaskCubit(),
+      lazy: false,
+      child: const HomeView(),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:elxer_tasks/core/theme/colors.dart';
-import 'package:elxer_tasks/core/widgets/customBottomNavigationBar/NavigationItem.dart';
 import 'package:flutter/material.dart';
+
+import 'NavigationItem.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar(

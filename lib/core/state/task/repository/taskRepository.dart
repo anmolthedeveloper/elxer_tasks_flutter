@@ -35,4 +35,13 @@ class TaskRepository {
       rethrow;
     }
   }
+
+  Future<void> deleteTaskForEmail(String taskId, String email) async {
+    try {
+      await usersCollection.doc(email).collection('tasks').doc(taskId).delete();
+    } catch (e) {
+      debugPrint("Error deleting task: $e");
+      rethrow;
+    }
+  }
 }
