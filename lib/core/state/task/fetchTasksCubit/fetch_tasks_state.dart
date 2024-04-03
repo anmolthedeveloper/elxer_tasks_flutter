@@ -8,7 +8,7 @@ class FetchTasksInitialState extends FetchTasksState {}
 class FetchTasksLoadingState extends FetchTasksState {}
 
 class FetchTasksSuccessState extends FetchTasksState {
-  final List<TaskModel?> tasks;
+  final List<TaskModel> tasks;
   FetchTasksSuccessState({required this.tasks});
 }
 

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 import '../../core/common/ui/overlay/overlayManager.dart';
+import '../../core/state/task/models/task.dart';
 import '../../core/state/user/user_bloc.dart';
 import '../../core/theme/colors.dart';
 import '../signin/signinPage.dart';
@@ -67,10 +68,37 @@ class _HomeViewState extends State<HomeView> {
               appBar: AppBar(
                 surfaceTintColor: secondaryOffWhiteColor,
                 backgroundColor: secondaryOffWhiteColor,
-                title: Text(
-                  'Welcome ${state.user.displayName?.split(' ')[0] ?? 'User'}',
-                  style: theme.textTheme.titleLarge!
-                      .copyWith(fontWeight: FontWeight.w400),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Welcome ${state.user.displayName?.split(' ')[0] ?? 'User'}',
+                      style: theme.textTheme.titleLarge!
+                          .copyWith(fontWeight: FontWeight.w400),
+                    ),
+                    BlocBuilder<FetchTasksCubit, FetchTasksState>(
+                      builder: (context, fetchTasksState) {
+                        if (fetchTasksState is FetchTasksSuccessState) {
+                          int incompleteTasksCount = 0;
+                          for (TaskModel task in fetchTasksState.tasks) {
+                            if (!task.isComplete!) {
+                              incompleteTasksCount++;
+                            }
+                          }
+                          if (incompleteTasksCount > 0) {
+                            return Text(
+                              'You have $incompleteTasksCount tasks due',
+                              style: theme.textTheme.titleMedium!.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: primaryBlackColor.withOpacity(.5),
+                                  fontSize: 14),
+                            );
+                          }
+                        }
+                        return Container();
+                      },
+                    ),
+                  ],
                 ),
               ),
               body: SafeArea(

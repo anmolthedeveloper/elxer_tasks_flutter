@@ -16,7 +16,7 @@ class TaskRepository {
     }
   }
 
-  Future<List<TaskModel?>> fetchTasksForEmail(String email) async {
+  Future<List<TaskModel>> fetchTasksForEmail(String email) async {
     try {
       QuerySnapshot querySnapshot = await usersCollection
           .doc(email)
@@ -24,11 +24,11 @@ class TaskRepository {
           // .orderBy('timestamp', descending: true)
           .get();
 
-      List<TaskModel?> tasks = querySnapshot.docs.map((doc) {
+      List<TaskModel> tasks = querySnapshot.docs.map((doc) {
         return TaskModel.fromJson(doc.data() as Map<String, dynamic>, doc.id);
       }).toList();
-      tasks.sort((a, b) => DateTime.parse(a!.createdAt!)
-          .compareTo(DateTime.parse(b!.createdAt!)));
+      tasks.sort((a, b) =>
+          DateTime.parse(a.createdAt!).compareTo(DateTime.parse(b.createdAt!)));
       return tasks;
     } catch (e) {
       debugPrint("Error fetching tasks: $e");

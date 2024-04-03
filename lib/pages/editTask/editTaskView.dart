@@ -70,7 +70,7 @@ class _EditTaskViewState extends State<EditTaskView> {
         appBar: AppBar(
           backgroundColor: secondaryOffWhiteColor,
           title: Text(
-            'Create Task',
+            'Edit Task',
             style: theme.textTheme.titleLarge!
                 .copyWith(fontWeight: FontWeight.w400),
           ),
@@ -113,7 +113,7 @@ class _EditTaskViewState extends State<EditTaskView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Update Task',
+                        'Edit Task',
                         style: theme.textTheme.titleMedium!
                             .copyWith(color: primaryWhiteColor),
                       ),
