@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../core/state/app/user_bloc.dart';
+import '../../core/state/user/user_bloc.dart';
 import '../dashboard/dashboardPage.dart';
 import '../signin/signinPage.dart';
 
@@ -21,52 +21,56 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 5000), () {
-      if (context.read<UserBloc>().state is NotSignedInUserState) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SignInPage(),
-          ),
-          (Route<dynamic> route) => false,
-        );
-        return;
-      }
-
-      if (context.read<UserBloc>().state is SignedInUserState) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const DashboardPage(),
-          ),
-          (Route<dynamic> route) => false,
-        );
-        return;
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimateGradient(
-        duration: const Duration(seconds: 3),
-        primaryBegin: Alignment.topLeft,
-        primaryEnd: Alignment.bottomLeft,
-        secondaryBegin: Alignment.bottomLeft,
-        secondaryEnd: Alignment.topRight,
-        primaryColors: const [
-          primaryGreenThemeColor,
-          primaryWhiteColor,
-        ],
-        secondaryColors: const [
-          primaryWhiteColor,
-          primaryGreenThemeColor,
-        ],
-        child: Center(
-          child: SvgPicture.asset(
-            'assets/images/logo.svg',
-            height: 75,
+      body: BlocListener<UserBloc, UserState>(
+        listener: (context, state) {
+          Timer(const Duration(milliseconds: 4000), () {
+            if (state is NotSignedInUserState) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const SignInPage(),
+                ),
+                (Route<dynamic> route) => false,
+              );
+              return;
+            }
+
+            if (state is SignedInUserState) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const DashboardPage(),
+                ),
+                (Route<dynamic> route) => false,
+              );
+              return;
+            }
+          });
+        },
+        child: AnimateGradient(
+          duration: const Duration(seconds: 3),
+          primaryBegin: Alignment.topLeft,
+          primaryEnd: Alignment.bottomLeft,
+          secondaryBegin: Alignment.bottomLeft,
+          secondaryEnd: Alignment.topRight,
+          primaryColors: const [
+            primaryGreenThemeColor,
+            primaryWhiteColor,
+          ],
+          secondaryColors: const [
+            primaryWhiteColor,
+            primaryGreenThemeColor,
+          ],
+          child: Center(
+            child: SvgPicture.asset(
+              'assets/images/logo.svg',
+              height: 75,
+            ),
           ),
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-import '../../core/state/app/user_bloc.dart';
+import '../../core/state/user/user_bloc.dart';
 import '../../core/theme/colors.dart';
 import '../signin/signinPage.dart';
 

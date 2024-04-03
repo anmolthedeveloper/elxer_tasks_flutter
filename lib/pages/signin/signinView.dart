@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
-import '../../core/state/app/user_bloc.dart';
+import '../../core/state/user/user_bloc.dart';
 import '../../core/utils/google_sign_in.dart';
 
 class SignInView extends StatefulWidget {

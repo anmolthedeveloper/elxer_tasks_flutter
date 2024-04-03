@@ -13,7 +13,7 @@ class AppTheme {
       ),
       primaryColor: primaryGreenThemeColor,
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: primaryGreenThemeColor.withOpacity(.5),
+        cursorColor: primaryBlackColor.withOpacity(.5),
         selectionColor: primaryGreenThemeColor.withOpacity(.5),
         selectionHandleColor: primaryGreenThemeColor,
       ),

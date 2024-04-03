@@ -1,10 +1,11 @@
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:elxer_tasks/pages/createTask/createTaskPage.dart';
 import 'package:elxer_tasks/pages/signin/signinPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../core/state/app/user_bloc.dart';
+import '../../core/state/user/user_bloc.dart';
 import '../../core/theme/colors.dart';
 import '../../core/widgets/customBottomNavigationBar/customBottomNavigationBar.dart';
 import '../home/homePage.dart';
@@ -82,7 +83,12 @@ class _DashboardViewState extends State<DashboardView> {
                 });
               },
               onPlusTap: () {
-                debugPrint('PLUS CLICKEDDD');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const CreateTaskPage(),
+                  ),
+                );
               },
             ),
           );

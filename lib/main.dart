@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app.dart';
-import 'core/state/app/globalBlocObserver.dart';
+import 'core/state/user/globalBlocObserver.dart';
 import 'firebase_options.dart';
 
 void main() async {

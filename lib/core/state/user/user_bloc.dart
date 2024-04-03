@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:elxer_tasks/core/state/user/repository/userRepository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -7,17 +8,22 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(UserInitialState()) {
+    var userRepo = UserRepository();
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       if (user == null) {
         add(NotSignedInUserEvent());
         return;
       } else {
-        add(SignedInUserEvent(user: user));
+        try {
+          bool userExists = await userRepo.doesEmailExist(user.email!);
+          if (!userExists) {
+            await userRepo.addUser(user.displayName!, user.email!);
+          }
+          add(SignedInUserEvent(user: user));
+        } catch (e) {
+          debugPrint('Error establishing connection with $e');
+        }
       }
-
-      debugPrint(
-          'User is signed in! AuthStateChangeListener through Oauth google');
-      debugPrint(user.toString());
     });
     on<SignedInUserEvent>((event, emit) {
       emit(SignedInUserState(user: event.user));
