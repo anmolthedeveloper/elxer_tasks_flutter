@@ -158,7 +158,7 @@ class TaskDetailDialog extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: width * .85,
+                    width: width * .8,
                     child: Text(
                       task.task!,
                       style: theme.textTheme.titleMedium,
@@ -170,7 +170,7 @@ class TaskDetailDialog extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: width * .85,
+                    width: width * .8,
                     child: SingleChildScrollView(
                       child: Text(
                         task.description!,

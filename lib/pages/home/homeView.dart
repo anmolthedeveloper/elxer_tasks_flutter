@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
+import '../../core/common/ui/dialogs/madeByDialog.dart';
 import '../../core/common/ui/overlay/overlayManager.dart';
 import '../../core/state/task/models/task.dart';
 import '../../core/state/user/user_bloc.dart';
@@ -100,6 +101,26 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ],
                 ),
+                actions: [
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext innerContext) {
+                            return const MadeByDialog();
+                          });
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 16.0, left: 16.0),
+                      child: Icon(
+                        Icons.star,
+                        size: 30,
+                        color: primaryGreenThemeColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               body: SafeArea(
                 child: Padding(
@@ -117,7 +138,7 @@ class _HomeViewState extends State<HomeView> {
                       if (fetchTasksState is FetchTasksSuccessState) {
                         if (fetchTasksState.tasks.isEmpty) {
                           return const Center(
-                            child: Text('Start by create a Task.'),
+                            child: Text('Start by creating a Task.'),
                           );
                         }
                         return ListView.builder(
