@@ -61,7 +61,6 @@ class TaskRepository {
 
   Future<void> updateTaskForEmail(String email, TaskModel task) async {
     try {
-      print(task.toJson());
       await usersCollection
           .doc(email)
           .collection('tasks')

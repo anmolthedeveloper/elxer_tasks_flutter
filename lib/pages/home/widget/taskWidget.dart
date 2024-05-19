@@ -74,6 +74,7 @@ class _TaskWidgetState extends State<TaskWidget> {
               });
         },
         child: Container(
+          height: height * .1,
           decoration: BoxDecoration(
             color: primaryWhiteColor,
             borderRadius: const BorderRadius.all(
@@ -88,73 +89,71 @@ class _TaskWidgetState extends State<TaskWidget> {
               ),
             ],
           ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    height: 100,
-                    width: 15,
-                    decoration: BoxDecoration(
-                      color: priorityColor.withOpacity(.8),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(12.0),
-                        bottomLeft: Radius.circular(12.0),
-                      ),
+          child: LayoutBuilder(builder: (context, constraints) {
+            return Row(
+              children: [
+                Container(
+                  height: constraints.maxHeight,
+                  width: 15,
+                  decoration: BoxDecoration(
+                    color: priorityColor.withOpacity(.8),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12.0),
+                      bottomLeft: Radius.circular(12.0),
                     ),
                   ),
-                  const Gap(8.0),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (!widget.task.isComplete!)
-                              Text(
-                                '${capitalizeFirstLetter(widget.task.priority!)} Priority',
-                                style: theme.textTheme.titleSmall!.copyWith(
-                                    color: priorityColor,
-                                    fontWeight: FontWeight.w200),
-                              ),
-                            if (widget.task.isComplete!) ...[
-                              Text(
-                                'Task completed',
-                                style: theme.textTheme.titleMedium!.copyWith(
+                ),
+                const Gap(8.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (!widget.task.isComplete!)
+                            Text(
+                              '${capitalizeFirstLetter(widget.task.priority!)} Priority',
+                              style: theme.textTheme.titleSmall!.copyWith(
                                   color: priorityColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14,
-                                ),
+                                  fontWeight: FontWeight.w200),
+                            ),
+                          if (widget.task.isComplete!) ...[
+                            Text(
+                              'Task completed',
+                              style: theme.textTheme.titleMedium!.copyWith(
+                                color: priorityColor,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
                               ),
-                              Text(
-                                '${capitalizeFirstLetter(widget.task.priority!)} Priority',
-                                style: theme.textTheme.titleMedium!.copyWith(
-                                    color: priorityColor,
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 10),
-                              ),
-                            ],
+                            ),
+                            Text(
+                              '${capitalizeFirstLetter(widget.task.priority!)} Priority',
+                              style: theme.textTheme.titleMedium!.copyWith(
+                                  color: priorityColor,
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 10),
+                            ),
                           ],
+                        ],
+                      ),
+                      const Gap(5.0),
+                      SizedBox(
+                        width: width * .8,
+                        child: Text(
+                          widget.task.task!,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.titleMedium!
+                              .copyWith(fontSize: 16, color: primaryBlackColor),
                         ),
-                        Gap(5.0),
-                        SizedBox(
-                          width: width * .8,
-                          child: Text(
-                            widget.task.task!,
-                            overflow: TextOverflow.ellipsis,
-                            style: theme.textTheme.titleMedium!.copyWith(
-                                fontSize: 16, color: primaryBlackColor),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
